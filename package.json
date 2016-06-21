@@ -11,6 +11,7 @@
   "dependencies": {
     "fs": "0.0.2",
     "jsonfile": "^2.3.1",
+    "mongojs": "^2.4.0",
     "readdir": "0.0.13",
     "xml2js": "^0.4.16"
   }
