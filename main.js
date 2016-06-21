@@ -12,16 +12,31 @@ var mongojs = require('mongojs')
 var db = mongojs('localhost:27017/clinical', ['study'])
 db.study.drop();
 
-var files = rd.readSync(input_dir, ['**.xml']);
+//var files = rd.readSync(input_dir, ['**.xml']);
 var parser = new xml2js.Parser();
 
-console.log(files);
+var walk    = require('walk');
+var files   = [];
 
-for(i = 0; i < files.length; i++) {
+// Walker options
+var walker  = walk.walk('./clinical_trials_march_2016', { followLinks: false });
+
+walker.on('file', function(root, stat, next) {
+	// Add this file to the list of files
+	files.push(root + '/' + stat.name);
+	next();
+});
+
+walker.on('end', function() {
+	console.log(files);
+});
+
+
+/*for(i = 0; i < files.length; i++) {
 	//var j_file = output_dir + files[i].substring(0, files[i].length - 4) + '.json';
 	console.log(i)
 	writeFile(i);
-}
+}*/
 
 function writeFile(i) {
 	fs.readFile(input_dir + files[i], function(err, data) {
