@@ -1,5 +1,5 @@
 // DIRS
-var input_dir = 'xml/';
+var input_dir = 'clinical_trials_march_2016/';
 var output_dir = 'json/';
 
 // PACKAGES
@@ -15,13 +15,14 @@ db.study.drop();
 var files = rd.readSync(input_dir, ['**.xml']);
 var parser = new xml2js.Parser();
 
+console.log(files);
 
 for(i = 0; i < files.length; i++) {
 	//var j_file = output_dir + files[i].substring(0, files[i].length - 4) + '.json';
+	console.log(i)
 	writeFile(i);
 }
 
-var count = 0;
 function writeFile(i) {
 	fs.readFile(input_dir + files[i], function(err, data) {
 		parser.parseString(data, function(err, result) {
@@ -33,7 +34,7 @@ function writeFile(i) {
 			result.clinical_study.rank = result.clinical_study["$"].rank;
 			delete result.clinical_study["$"];
 			db.study.insert(result.clinical_study)
-			console.log(count++)
+			console.log(i)
 		});
 	});
 }
