@@ -1,5 +1,5 @@
 // DIRS
-var input_dir = 'xml/';
+var input_dir = 'clinical_trials_march_2016/';
 var output_dir = 'json/';
 
 // PACKAGES
