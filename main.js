@@ -20,15 +20,15 @@ var files   = [];
 
 // Walker options
 var walker  = walk.walk('./clinical_trials_march_2016', { followLinks: false });
-
+var count = 0;
 walker.on('file', function(root, stat, next) {
 	// Add this file to the list of files
-	files.push(root + '/' + stat.name);
+	console.log(count++ , stat.name)
 	next();
 });
 
 walker.on('end', function() {
-	console.log(files);
+	console.log('end');
 });
 
 
