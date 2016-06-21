@@ -23,8 +23,9 @@ var walker  = walk.walk('./clinical_trials_march_2016', { followLinks: false });
 var count = 0;
 walker.on('file', function(root, stat, next) {
 	// Add this file to the list of files
-	console.log(count++ , stat.name)
-	next();
+	console.log(count++ , stat.name);
+	writeFile(stat.name);
+	next()
 });
 
 walker.on('end', function() {
@@ -38,8 +39,8 @@ walker.on('end', function() {
 	writeFile(i);
 }*/
 
-function writeFile(i) {
-	fs.readFile(input_dir + files[i], function(err, data) {
+function writeFile(file, next) {
+	fs.readFile(input_dir + file, function(err, data) {
 		parser.parseString(data, function(err, result) {
 		/*	jf.writeFile(j_file, result, function(err) {
 				if(err) console.error(err);
@@ -49,7 +50,6 @@ function writeFile(i) {
 			result.clinical_study.rank = result.clinical_study["$"].rank;
 			delete result.clinical_study["$"];
 			db.study.insert(result.clinical_study)
-			console.log(i)
 		});
 	});
 }
